@@ -3,11 +3,17 @@
 # но чаще всего будет какая-то логика обработки данных сейчас или в будущем.
 
 # Пример
+from dao.genre_dao import GenreDAO
+from dao.model.schemas import genres_schema, genre_schema
 
-# class BookService:
-#
-#     def __init__(self, book_dao: BookDAO):
-#         self.book_dao = book_dao
-#
-#     def get_books(self) -> List["Book"]:
-#         return self.book_dao.get_books()
+
+class GenreService:
+
+    def __init__(self, genre_dao: GenreDAO):
+        self.genre_dao = genre_dao
+
+    def get_genres(self) -> list["Genre"]:
+        return genres_schema.dump(self.genre_dao.get_all())
+
+    def get_genre(self, uid):
+        return genre_schema.dump(self.genre_dao.get_one(uid))
